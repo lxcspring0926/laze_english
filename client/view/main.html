@@ -1,1 +1,146 @@
-adsadasd
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Chat</title>
+ 
+<style type="text/css">
+#log {
+    border: 1px solid #AAA;
+    height:400px;
+    width:600px;
+    overflow: scroll;
+}
+</style>
+ 
+</head>
+ 
+<body>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="./js/jquery-1.11.1.min.js"></script>
+<script src="./js/jquery.selection.js"></script>
+
+<script type="text/javascript">
+
+function write_message()
+{
+    var $ul = document.querySelector('#messageArea');
+
+    var $li = document.createElement('li');
+    $li.appendChild(document.createTextNode("test"));
+    $ul.appendChild($li);
+
+    var xhr = new XMLHttpRequest();
+    var url = 'http://127.0.0.1:3000/getUser/test' 
+    xhr.open('GET', url);
+    xhr.send();
+ 
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === 4 && xhr.status === 200) {
+		var $li = document.createElement('li');
+    $li.appendChild(document.createTextNode(xhr.responseText));
+    $ul.appendChild($li);
+        }
+    }
+}
+
+function trans(){
+	var res = $.selection();
+	alert(res)
+}
+
+function transPage()
+{
+    var $ul = document.querySelector('#messageArea');
+
+    var $li = document.createElement('li');
+    $li.appendChild(document.createTextNode("test"));
+    $ul.appendChild($li);
+
+    var data = {transValue: 'https://stackoverflow.com/questions/19112357/java-simpledateformatyyyy-mm-ddthhmmssz-gives-timezone-as-ist', type: 'textArea' }; 
+    var json = {};
+    json.transValue = "https://stackoverflow.com/questions/19112357/java-simpledateformatyyyy-mm-ddthhmmssz-gives-timezone-as-ist";
+    //json.job = "SystemsEngneer";
+
+    var xhr = new XMLHttpRequest();
+    var url = 'http://127.0.0.1:3000/transPage' 
+    xhr.open('POST', url);
+
+// サーバに対して解析方法を指定する
+//xhr.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+
+// データをリクエスト ボディに含めて送信する
+//xhr.send( EncodeHTMLForm( data ) );
+// Content-Typeを設定
+xhr.setRequestHeader("Content-Type", "application/json");
+
+// 送信
+xhr.send(JSON.stringify(json));
+
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState === 4 && xhr.status === 200) {
+		var data = JSON.parse(xhr.responseText);
+		var $li = document.createElement('li');
+    $li.appendChild(document.createTextNode(xhr.responseText));
+    $ul.appendChild($li);
+        }
+    }
+}
+
+// HTMLフォームの形式にデータを変換する
+function EncodeHTMLForm( data )
+{
+    var params = [];
+
+    for( var name in data )
+    {
+        var value = data[ name ];
+        var param = encodeURIComponent( name ) + '=' + encodeURIComponent( value );
+
+        params.push( param );
+    }
+
+    return params.join( '&' ).replace( /%20/g, '+' );
+}
+
+function includeHtml(){
+//$("#success").load("https://stackoverflow.com/questions/19112357/java-simpledateformatyyyy-mm-ddthhmmssz-gives-timezone-as-ist");
+	//window.open("https://stackoverflow.com/questions/56666783/accordion-stoped-working-after-i-pasted-it-in-my");
+return false;
+}
+	function fileget(imgfile) {
+		if(!imgfile.files.length) return;
+		var file=imgfile.files[0];
+		var fr=new FileReader();
+		fr.onload=function(evt) {
+			document.getElementById("base64area").innerHTML=evt.target.result;
+		}
+		fr.readAsDataURL(file);
+	}
+</script>
+ 
+<form method="post" onsubmit="write_message();return false;">
+  <input id="message" name="message" type="text" value="" />
+	<input type="file" onchange="fileget(this);">
+	<textarea id="base64area">base64データ</textarea>
+  <input type="button" value="send" onclick="write_message()">
+  <input type="button" value="trans" onclick="trans()">
+  <input type="button" value="includeHtml" onclick="includeHtml()">
+  <input type="button" value="transPageShow" onclick="transPage()">
+  <input type="hidden" id="keyCode" value="">
+</form>
+ 
+ <form method="post" action="http://localhost:8081/OCN-Support/LoginSubmit">
+<input type="textarea" name="SAMLResponse" value="response" />
+<input type="hidden" name="RelayState" value="token" />
+<input type="submit" value="Submit" />
+</form>
+
+<ul id="messageArea">
+    <li class="list">user:</li>
+    <li class="list">ai suzy:</li>
+</ul>
+
+<div id="success"></div> 
+</body>
+</html>
